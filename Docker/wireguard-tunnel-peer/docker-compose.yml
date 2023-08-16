@@ -1,0 +1,14 @@
+services:
+  wireguard-tunnel-peer:
+    image: ghcr.io/digitallyrefined/docker-wireguard-tunnel:v2
+    container_name: wireguard-tunnel-peer
+    environment:
+      # Note that DOMAIN & PEERS are not required for the peer
+      # Services to expose format (comma-separated)
+      # SERVICES=peer-id:peer-container-name:peer-container-port:expose-port-as
+      - SERVICES=peer1:nginx:80:80
+    cap_add:
+      - NET_ADMIN
+    volumes:
+      - ./data/config:/etc/wireguard
+    restart: unless-stopped

@@ -1,0 +1,10 @@
+services:
+  argus:
+    image: releaseargus/argus:latest
+    container_name: argus
+    volumes:
+      - ./config.yml:/app/config.yml
+      - ./data/storage/argus.db:/app/data/argus.db
+    ports:
+      - 47101:8080 # <Host_Port:Container_Port>
+    restart: always

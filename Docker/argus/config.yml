@@ -1,0 +1,71 @@
+settings:
+  log:
+    level: INFO       # Log level, DEBUG/VERBOSE/INFO/WARNING/ERROR
+    timestamps: false # Log with timestamps
+  data:
+    database_file: data/argus.db # SQLite DB file used to track the state of services
+  web:
+    listen_host: 0.0.0.0  # IP address to listen on
+    listen_port: 8080     # Port to listen on
+    route_prefix: /       # Web route prefix, e.g. /demo means http://IP:PORT/demo to access
+    cert_file: ''         # HTTPS Cert path, e.g. `cert.pem`
+    pkey_file: ''         # HTTPS PrivKey path, e.g. `privkey.pem`
+    #basic_auth:
+    #  username: 'admin'        # Basic auth username, e.g. `admin`
+    #  password: 'admin123'        # Basic auth password, e.g. `test123`
+notify:
+  default_googlechat:
+    type: googlechat
+    url_fields:
+      Raw: https://chat.googleapis.com/v1/spaces/AAAANaBNyk4/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=Zclxdki1xE7BPwb8V1wlTF2STzCDKmWL4Nfg-AdAmsg%3D
+defaults:
+  service:
+    options:
+      interval: 8h              # How often to query for new releases
+      semantic_versioning: true  # Whether to enforce semantic versioning (required to only alert on newew versions)
+    latest_version:
+      access_token: ''            # GitHub access token to increase your rate-limit and/or access private repos
+                                  # https://github.com/settings/tokens - w/ repo.public_repo/repo for public/private
+      allow_invalid_certs: false  # Whether invalid HTTPS certs are allowed in queries
+      use_prerelease: false       # Whether 'prerelease' GitHub tags can be used
+    deployed_version:             # Get the `current_version` from a deployed service
+      allow_invalid_certs: false  # Accept invalid HTTPS certs/not
+    dashboard:
+      auto_approve: false  # Whether approval is required on the web UI for sending the new release WebHooks
+service:
+  louislam/uptime-kuma:
+    latest_version:
+      type: github
+      url: louislam/uptime-kuma
+    notify:
+      default_googlechat: {}
+    deployed_version:
+      url: http://uptime.mps.internal/metrics
+      basic_auth:
+        username:
+        password: uk1_WQ8gnlvwQq5BRHNwgkMeH88804_0-0hGg5hVmKNj
+      regex: app_version{version=\"([0-9.]+)\",major=\"[0-9]+\",minor=\"[0-9]+\",patch=\"[0-9]+\"}
+    dashboard:
+      web_url: https://github.com/louislam/uptime-kuma/releases/{{ version }}
+      icon: https://raw.githubusercontent.com/louislam/uptime-kuma/master/public/icon.png
+  release-argus/argus:
+    latest_version:
+      type: github
+      url: release-argus/argus
+    notify:
+      default_googlechat: {}
+    deployed_version:
+      url: http://argus.mps.internal/api/v1/version
+      json: version
+    dashboard:
+      web_url: https://github.com/release-argus/Argus/blob/master/CHANGELOG.md
+      icon: https://github.com/release-argus/Argus/raw/master/web/ui/static/favicon.svg
+  google/chrome-browser:
+    latest_version:
+      type: url
+      url: https://chromiumdash.appspot.com/fetch_releases?channel=Stable&platform=Windows&num=1
+    notify:
+      default_googlechat: {}
+    dashboard:
+      web_url: https://chromeenterprise.google/browser/download/#windows-tab
+      icon: https://chromeenterprise.google/static/images/chrome-logo.svg
