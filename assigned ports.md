@@ -8,3 +8,4 @@
 | portainer | 47103 |
 | shiori | 47104 |
 | uptime-kuma | 47105 |
+| focalboard | 47106 |

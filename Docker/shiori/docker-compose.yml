@@ -11,4 +11,4 @@ services:
       - 47104:8080
     restart: unless-stopped
     volumes:
-      - ./data:/data
+      - ./data/:/data

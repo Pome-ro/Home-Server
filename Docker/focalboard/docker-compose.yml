@@ -1,0 +1,6 @@
+version: '3.3'
+services:
+    focalboard:
+        ports:
+            - '47106:8000'
+        image: mattermost/focalboard
