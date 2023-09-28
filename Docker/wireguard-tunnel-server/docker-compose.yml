@@ -1,0 +1,21 @@
+services:
+  wireguard-tunnel-server:
+    image: ghcr.io/digitallyrefined/docker-wireguard-tunnel:v2
+    container_name: wireguard-tunnel-server
+    environment:
+      # Update to your domain
+      - DOMAIN=wireguard-tunnel.example.com
+      # Number of peers to auto generate config for
+      - PEERS=1
+      # Services to expose format (comma-separated)
+      # SERVICES=peer-id:peer-container-name:peer-container-port:expose-port-as
+      - SERVICES=peer1:nginx:80:8080,peer1:nginx-demo:80:8081
+    cap_add:
+      - NET_ADMIN
+    volumes:
+      - ./config:/etc/wireguard
+    restart: unless-stopped
+    ports:
+      - '51820:51820/udp'
+      - 8080:8080
+      - 8081:8081

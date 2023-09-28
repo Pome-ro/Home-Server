@@ -7,4 +7,4 @@ services:
       - ./data/storage/argus.db:/app/data/argus.db
     ports:
       - 47101:8080 # <Host_Port:Container_Port>
-    restart: always
+    restart: unless-stopped
