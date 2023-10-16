@@ -7,8 +7,4 @@ services:
           - '47106:8000'
         volumes:
           - ./data:/data
-<<<<<<< HEAD
         restart: unless-stopped
-=======
-        restart: unless-stopped
->>>>>>> b1e84ba0aaf7599eac131ed4d5594438b80b0956
