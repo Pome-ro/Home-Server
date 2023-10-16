@@ -1,3 +1,8 @@
+<<<<<<< HEAD
 Docker/*/data
 Docker/shiori/archive/
 Docker/shiori/thumb/
+=======
+./Docker/*/data
+*.env
+>>>>>>> b1e84ba0aaf7599eac131ed4d5594438b80b0956
