@@ -10,3 +10,4 @@
 | uptime-kuma | 47105 |
 | focalboard | 47106 |
 | pihole | 47107 |
+| miniflux | 47108 |
