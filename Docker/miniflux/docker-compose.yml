@@ -1,7 +1,7 @@
 services:
   miniflux:
     image: miniflux/miniflux:latest
-    env_file: /var/data/config/miniflux/miniflux.env
+    env_file: ./miniflux.env
     ports:
       - "47108:8080"
     depends_on:
@@ -9,12 +9,14 @@ services:
         condition: service_healthy
     healthcheck:
       test: ["CMD", "/usr/bin/miniflux", "-healthcheck", "auto"]
+    restart: unless-stopped
   db:
     image: postgres:15
-    env_file: /var/data/config/miniflux/miniflux.env
+    env_file: ./miniflux.env
     volumes:
       - ./data/db:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD", "pg_isready", "-U", "minifluxdb"]
+      test: ["CMD", "pg_isready", "-U", "miniflux"]
       interval: 10s
       start_period: 30s
+    restart: unless-stopped
