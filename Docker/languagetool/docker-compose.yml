@@ -1,4 +1,4 @@
-name: <your project name>
+name: local-lang-tool
 services:
     docker-languagetool:
         container_name: languagetool
@@ -7,17 +7,16 @@ services:
         user: 65534:65534
         read_only: true
         volumes:
-            - type: bind
-              src: /tmp/languagetool/tmp
-              dst: /tmp
+            - '/tmp:/languagetool/tmp'
             - './data/ngrams:/ngrams'
         ports:
-            - 127.0.0.1:8010:8010
+            - 127.0.0.1:47109:8010
         deploy:
             resources:
                 limits:
-                    memory: 412m
-        memswap_limit: 500m
+                    memory: 2g
+        memswap_limit: 2.5g
         environment:
             - EXTRAOPTIONS=-Xmx382M
         image: silviof/docker-languagetool:latest
+
