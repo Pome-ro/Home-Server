@@ -1,0 +1,15 @@
+name: apprise
+services:
+    apprise:
+        container_name: apprise
+        ports:
+            - 47111:8000
+        volumes:
+            - ./data/config:/var/lib/apprise/config
+            - ./data/plugin:/var/lib/apprise/plugin
+            - ./data/attach:/var/lib/apprise/attach
+        environment:
+            - APPRISE_WORKER_COUNT=1
+            - PUID=1000
+            - PGID=1000
+        image: caronc/apprise:latest

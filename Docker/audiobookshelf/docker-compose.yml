@@ -2,6 +2,7 @@ version: "3.7"
 services:
   audiobookshelf:
     image: ghcr.io/advplyr/audiobookshelf:latest
+    restart: unless-stopped
     ports:
       - 47109:80
     volumes:
